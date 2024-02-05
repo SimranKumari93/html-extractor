@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 import requests
 
 def index(request):
-    return HttpResponse("Welcome to the data extraction system!")
+    return HttpResponse("Welcome to the data eaxtraction system!")
 def extract_data(request, asset_id):
     asset_id = get_object_or_404(HTMLAsset, pk=asset_id)
     response = requests.get(asset_id.url)
