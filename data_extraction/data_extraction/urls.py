@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('extraction_app.urls')),
-    path('', include('extraction_app.urls')),  # Include the app's URLs for the root URL
+    path('', include('extraction_app.urls')),
+    # path('my-view/', views.my_view, name='my_view'),
+
+ 
+        # Include the app's URLs for the root URL
 ]

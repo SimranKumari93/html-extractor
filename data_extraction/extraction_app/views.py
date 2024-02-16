@@ -3,11 +3,12 @@ from .models import HTMLAsset, ExtractedData
 from .serializers import HTMLAssetSerializer, ExtractedDataSerializer
 from django.http import HttpResponse , JsonResponse
 from bs4 import BeautifulSoup
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 import requests
+from .forms import MyForm
 
 def index(request):
-    return HttpResponse("Welcome to the data eaxtraction system!")
+    return HttpResponse("Welcome to the data extraction system!")
 def extract_data(request, asset_id):
     asset_id = get_object_or_404(HTMLAsset, pk=asset_id)
     response = requests.get(asset_id.url)
@@ -30,3 +31,14 @@ class HTMLAssetViewSet(viewsets.ModelViewSet):
 class ExtractedDataViewSet(viewsets.ModelViewSet):
     queryset = ExtractedData.objects.all()
     serializer_class = ExtractedDataSerializer
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+        if form.is_valid():
+            input_text = form.cleaned_data['input_text']
+            # Add logic here to handle form submission
+            print('Form submitted with value:', input_text)
+    else:
+        form = MyForm()
+    return render(request, 'my_template.html', {'form': form})
